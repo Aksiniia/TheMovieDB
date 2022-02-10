@@ -3,12 +3,14 @@ package com.example.themoviedb;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.Api.ApiRetrofit;
+import com.example.themoviedb.Api.PopularModel;
 import com.example.themoviedb.databinding.ActivityFilmsBinding;
 
 import retrofit2.Call;
@@ -23,13 +25,14 @@ public class FilmsActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(binding.getRoot());
 
-//		RecyclerView r = findViewById(R.id.rec_new);
-//		r.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+		RecyclerView r = findViewById(R.id.rec_new);
+		r.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+
 		ApiRetrofit.API.getMovies("4ec92a5ee97823eb5d0497fb05a5f5a1").enqueue(new Callback<LatestModel>() {
 			@Override
 			public void onResponse(Call<LatestModel> call, Response<LatestModel> response) {
 				if (response.code() == 200) {
-				binding.name.setText(response.body().original_title);
+//					binding.name.setText(response.body().original_title);
 				}
 			}
 
@@ -39,6 +42,18 @@ public class FilmsActivity extends AppCompatActivity {
 			}
 		});
 
+		ApiRetrofit.API.getPopular("4ec92a5ee97823eb5d0497fb05a5f5a1").enqueue(new Callback<PopularModel>() {@Override
+			public void onResponse(Call<PopularModel> call, Response<PopularModel> response) {
+				if (response.code() == 200) {
+					r.setAdapter(new MovieAdapter(FilmsActivity.this, response.body()));
+				}
+			}
+
+			@Override
+			public void onFailure(Call<PopularModel> call, Throwable t) {
+
+			}
+		});
 	}
 
 	public void info(View view) {

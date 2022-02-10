@@ -1,5 +1,7 @@
 package com.example.themoviedb.Api;
 
 public class MovieModel {
-	String movieId;
+	public String poster_path;
+	public String original_title;
+	public String backdrop_path;
 }
