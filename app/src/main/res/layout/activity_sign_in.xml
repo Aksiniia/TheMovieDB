@@ -24,36 +24,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="140dp"
-            android:background="#6667BC"
-            android:hint="Логин"
-            android:inputType="textEmailAddress"
-            android:paddingStart="22dp"
-            android:textColor="@color/white"
-            android:textColorHint="#66FFFFFF" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/sign_img" />
 
-        <EditText
-            android:id="@+id/editTextTextPassword"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="#3F355C"
+            app:cardCornerRadius="20dp">
+
+            <EditText
+                android:id="@+id/editTextTextEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#6667BC"
+                android:hint="Логин"
+                android:inputType="textEmailAddress"
+                android:paddingStart="22dp"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="#6667BC"
-            android:hint="Пароль"
-            android:inputType="textPassword"
-            android:paddingStart="22dp"
-            android:textColor="@color/white"
-            android:textColorHint="#66FFFFFF" />
+            android:background="#3F355C"
+            app:cardCornerRadius="20dp">
+
+            <EditText
+                android:id="@+id/editTextTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#6667BC"
+                android:hint="Пароль"
+                android:inputType="textPassword"
+                android:paddingStart="22dp"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF" />
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.button.MaterialButton
             app:cornerRadius="14dp"
             android:id="@+id/signIn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="100dp"
             android:onClick="toFilms"
             android:layout_marginBottom="30dp"
             android:backgroundTint="#6667BC"
