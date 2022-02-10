@@ -3,15 +3,13 @@ package com.example.themoviedb;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.Api.ApiRetrofit;
-
-import java.util.List;
+import com.example.themoviedb.databinding.ActivityFilmsBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,17 +19,17 @@ public class FilmsActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		final ActivityFilmsBinding binding = ActivityFilmsBinding.inflate(getLayoutInflater());
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_films);
+		setContentView(binding.getRoot());
 
-		RecyclerView r = findViewById(R.id.rec_new);
-		r.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+//		RecyclerView r = findViewById(R.id.rec_new);
+//		r.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 		ApiRetrofit.API.getMovies("4ec92a5ee97823eb5d0497fb05a5f5a1").enqueue(new Callback<LatestModel>() {
 			@Override
 			public void onResponse(Call<LatestModel> call, Response<LatestModel> response) {
 				if (response.code() == 200) {
-					int a = 0;
-					r.setAdapter(new MovieAdapter(FilmsActivity.this, (List<LatestModel>) response.body()));
+				binding.name.setText(response.body().original_title);
 				}
 			}
 

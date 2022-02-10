@@ -17,9 +17,9 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.Holder> {
 	Context context;
-	List<LatestModel> latestModel;
+	LatestModel latestModel;
 
-	public MovieAdapter(Context context, List<LatestModel> latestModel) {
+	public MovieAdapter(Context context, LatestModel latestModel) {
 		this.context = context;
 		this.latestModel = latestModel;
 	}
@@ -37,14 +37,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.Holder> {
 
 	@Override
 	public void onBindViewHolder(@NonNull Holder holder, int position) {
-//		final View viewById = ((ImageView) holder.itemView.findViewById(R.id.image));
+		final View viewById = ((ImageView) holder.itemView.findViewById(R.id.image));
 //		((TextView)holder.itemView.findViewById(R.id.name)).setText(latestModel.get(position).original_title);
 
 	}
 
 	@Override
 	public int getItemCount() {
-		return 3;
+		return 1;
 	}
 
 	public static class Holder extends RecyclerView.ViewHolder {
