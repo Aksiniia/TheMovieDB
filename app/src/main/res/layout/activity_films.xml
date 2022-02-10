@@ -48,7 +48,7 @@
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
-            android:layout_height="140dp">
+            android:layout_height="150dp">
 
             <LinearLayout
                 android:onClick="info"
@@ -64,6 +64,7 @@
         </HorizontalScrollView>
 
         <HorizontalScrollView
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="140dp">
 
@@ -82,16 +83,19 @@
                     android:layout_width="60dp"
                     android:layout_height="48dp"
                     android:backgroundTint="#3F355C"
+                    android:layout_marginStart="20dp"
                     app:cardCornerRadius="16dp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="60dp"
+                    android:layout_marginStart="20dp"
                     android:layout_height="48dp"
                     android:backgroundTint="#3F355C"
                     app:cardCornerRadius="16dp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="60dp"
+                    android:layout_marginStart="20dp"
                     android:layout_height="48dp"
                     android:backgroundTint="#3F355C"
                     app:cardCornerRadius="16dp" />
