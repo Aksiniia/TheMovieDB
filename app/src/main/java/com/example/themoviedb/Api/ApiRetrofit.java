@@ -7,7 +7,6 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiRetrofit {
@@ -25,11 +24,15 @@ public interface ApiRetrofit {
 	Call<ResponseBody> signIn(@Query("email") String email,
 							  @Query("password") String password);
 
+	@GET("3/authentication/token/validate_with_login?api_key=<<key>>")
+	Call<ResponseBody> validate(@Query("email") String email,
+							  @Query("password") String password);
+
 
 	@GET("3/movie/latest")
 	Call<LatestModel> getMovies(@Query("api_key") String key);
 
 	@GET("3/movie/popular")
-	Call<PopularModel> getPopular(@Query("api_key") String key );
+	Call<PopularModel> getPopular(@Query("api_key") String key);
 
 }

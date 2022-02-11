@@ -3,6 +3,8 @@ package com.example.themoviedb;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -28,10 +30,37 @@ public class SignInActivity extends AppCompatActivity {
 		Button button = findViewById(R.id.signIn);
 		EditText pass = findViewById(R.id.editTextTextPassword);
 		EditText email = findViewById(R.id.editTextTextEmailAddress);
+
+
+		final TextWatcher watcher = new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable editable) {
+				boolean enabled = true;
+				String p = pass.getText().toString();
+				String em = email.getText().toString();
+				if (p.isEmpty() || em.isEmpty()) {
+					enabled = false;
+				}
+				button.setEnabled(enabled);
+			}
+		};
+
+		email.addTextChangedListener(watcher);
+		pass.addTextChangedListener(watcher);
+
 		button.setOnClickListener(v -> {
 			String p = pass.getText().toString();
 			String em = email.getText().toString();
-
 
 			if (!Patterns.EMAIL_ADDRESS.matcher(em).matches()) {
 				email.setError("Invalid email");
@@ -41,10 +70,6 @@ public class SignInActivity extends AppCompatActivity {
 				pass.setError("Invalid password");
 				return;
 			} else {
-//				button.setActivated(em.isEmpty());
-//				button.setActivated(p.isEmpty());
-				button.setEnabled(!p.isEmpty());
-				button.setEnabled(!em.isEmpty());
 
 				startActivity(new Intent(SignInActivity.this, FilmsActivity.class));
 				finish();

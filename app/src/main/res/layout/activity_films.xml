@@ -51,12 +51,12 @@
             android:layout_height="150dp">
 
             <LinearLayout
-                android:onClick="info"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:onClick="info"
                     android:id="@+id/rec_new"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
