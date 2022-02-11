@@ -70,7 +70,7 @@ public class SignInActivity extends AppCompatActivity {
 				pass.setError("Invalid password");
 				return;
 			} else {
-				// TODO get Api key from api
+				// get Api key from api
 				MainActivity.API_KEY = "4ec92a5ee97823eb5d0497fb05a5f5a1";
 				MainActivity.saveApi_key(this);
 
