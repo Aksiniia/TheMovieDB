@@ -28,7 +28,7 @@ public class FilmsActivity extends AppCompatActivity {
 		RecyclerView r = findViewById(R.id.rec_new);
 		r.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
-		ApiRetrofit.API.getMovies("4ec92a5ee97823eb5d0497fb05a5f5a1").enqueue(new Callback<LatestModel>() {
+		ApiRetrofit.API.getMovies(MainActivity.API_KEY).enqueue(new Callback<LatestModel>() {
 			@Override
 			public void onResponse(Call<LatestModel> call, Response<LatestModel> response) {
 				if (response.code() == 200) {
@@ -42,7 +42,8 @@ public class FilmsActivity extends AppCompatActivity {
 			}
 		});
 
-		ApiRetrofit.API.getPopular("4ec92a5ee97823eb5d0497fb05a5f5a1").enqueue(new Callback<PopularModel>() {@Override
+		ApiRetrofit.API.getPopular(MainActivity.API_KEY).enqueue(new Callback<PopularModel>() {
+			@Override
 			public void onResponse(Call<PopularModel> call, Response<PopularModel> response) {
 				if (response.code() == 200) {
 					r.setAdapter(new MovieAdapter(FilmsActivity.this, response.body()));
