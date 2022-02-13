@@ -71,9 +71,7 @@ public class SignInActivity extends AppCompatActivity {
 				return;
 			} else {
 				// get Api key from api
-				MainActivity.API_KEY = "4ec92a5ee97823eb5d0497fb05a5f5a1";
-				MainActivity.saveApi_key(this);
-
+				Storage.getInstance(this).setApiKey("4ec92a5ee97823eb5d0497fb05a5f5a1");
 				startActivity(new Intent(SignInActivity.this, FilmsActivity.class));
 				finish();
 			}
