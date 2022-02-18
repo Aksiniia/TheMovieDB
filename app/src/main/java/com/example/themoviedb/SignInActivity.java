@@ -14,8 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.themoviedb.Api.ApiRetrofit;
+import com.example.themoviedb.Api.Token;
+import com.example.themoviedb.Api.ValidateUser;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,8 +29,8 @@ public class SignInActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_sign_in);
 
 		Button button = findViewById(R.id.signIn);
-		EditText pass = findViewById(R.id.editTextTextPassword);
-		EditText email = findViewById(R.id.editTextTextEmailAddress);
+		EditText passInput = findViewById(R.id.editTextTextPassword);
+		EditText emailInput = findViewById(R.id.editTextTextEmailAddress);
 
 
 		final TextWatcher watcher = new TextWatcher() {
@@ -46,48 +47,58 @@ public class SignInActivity extends AppCompatActivity {
 			@Override
 			public void afterTextChanged(Editable editable) {
 				boolean enabled = true;
-				String p = pass.getText().toString();
-				String em = email.getText().toString();
-				if (p.isEmpty() || em.isEmpty()) {
+				String password = passInput.getText().toString();
+				String email = emailInput.getText().toString();
+				if (password.isEmpty() || email.isEmpty()) {
 					enabled = false;
 				}
 				button.setEnabled(enabled);
 			}
 		};
 
-		email.addTextChangedListener(watcher);
-		pass.addTextChangedListener(watcher);
+		emailInput.addTextChangedListener(watcher);
+		passInput.addTextChangedListener(watcher);
 
-		button.setOnClickListener(v -> {
-			String p = pass.getText().toString();
-			String em = email.getText().toString();
+//		button.setOnClickListener
+		findViewById(R.id.signIn).setOnClickListener(v -> {
+			String password = passInput.getText().toString();
+			String email = emailInput.getText().toString();
 
-			if (!Patterns.EMAIL_ADDRESS.matcher(em).matches()) {
-				email.setError("Invalid email");
-				return;
+			if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+				emailInput.setError("Invalid emailInput");
 			}
-			if (p.length() <= 5) {
-				pass.setError("Invalid password");
-				return;
+			if (password.length() <= 5) {
+				passInput.setError("Invalid password");
 			} else {
-				// get Api key from api
-				Storage.getInstance(this).setApiKey("4ec92a5ee97823eb5d0497fb05a5f5a1");
-				startActivity(new Intent(SignInActivity.this, FilmsActivity.class));
-				finish();
+				ApiRetrofit.API.signIn().enqueue(new Callback<Token>() {
+					@Override
+					public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
+						if (response.code() == 200 && response.body() != null) {
+							final String token = response.body().request_token;
+							System.out.println();
+							ApiRetrofit.API.validate(new ValidateUser(email, password, token)).enqueue(new Callback<ValidateResponse>() {
+								@Override
+								public void onResponse(Call<ValidateResponse> call, Response<ValidateResponse> response) {
+									if (response.code() == 200 && response.body() != null && response.body().success) {
+										startActivity(new Intent(SignInActivity.this, FilmsActivity.class));
+										finish();
+									}
+								}
+
+								@Override
+								public void onFailure(Call<ValidateResponse> call, Throwable t) {
+
+								}
+							});
+						}
+					}
+
+					@Override
+					public void onFailure(@NonNull Call<Token> call, Throwable t) {
+
+					}
+				});
 			}
-
-
-			ApiRetrofit.API.signIn(em, p).enqueue(new Callback<ResponseBody>() {
-				@Override
-				public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-					int a = 0;
-				}
-
-				@Override
-				public void onFailure(@NonNull Call<ResponseBody> call, Throwable t) {
-
-				}
-			});
 		});
 	}
 

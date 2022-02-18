@@ -19,14 +19,14 @@ public class Storage {
 
 	private Storage(Context context) {
 		this.context = context;
-		android.content.SharedPreferences sharedPreferences = context.getSharedPreferences("settings", MODE_PRIVATE);
+		SharedPreferences sharedPreferences = context.getSharedPreferences("settings", MODE_PRIVATE);
 		apiKey = sharedPreferences.getString("API_KEY", null);
 
 	}
 
 	public void setApiKey(String apiKey) {
 		this.apiKey = apiKey;
-		android.content.SharedPreferences sharedPreferences = context.getSharedPreferences("settings", MODE_PRIVATE);
+		SharedPreferences sharedPreferences = context.getSharedPreferences("settings", MODE_PRIVATE);
 		final SharedPreferences.Editor edit = sharedPreferences.edit();
 		edit.putString("API_KEY", apiKey);
 		edit.commit();
