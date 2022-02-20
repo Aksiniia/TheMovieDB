@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +26,11 @@ public class SignInActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_in);
+		SettingsStorage.load(this);
 
+		if (SettingsStorage.token != null) {
+
+		}
 		Button button = findViewById(R.id.signIn);
 		EditText passInput = findViewById(R.id.editTextTextPassword);
 		EditText emailInput = findViewById(R.id.editTextTextEmailAddress);
@@ -59,14 +62,13 @@ public class SignInActivity extends AppCompatActivity {
 		emailInput.addTextChangedListener(watcher);
 		passInput.addTextChangedListener(watcher);
 
-//		button.setOnClickListener
-		findViewById(R.id.signIn).setOnClickListener(v -> {
+		button.setOnClickListener(v -> {
 			String password = passInput.getText().toString();
 			String email = emailInput.getText().toString();
 
-			if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-				emailInput.setError("Invalid emailInput");
-			}
+//			if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//				emailInput.setError("Invalid emailInput");
+//			}
 			if (password.length() <= 5) {
 				passInput.setError("Invalid password");
 			} else {
@@ -74,12 +76,16 @@ public class SignInActivity extends AppCompatActivity {
 					@Override
 					public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
 						if (response.code() == 200 && response.body() != null) {
-							final String token = response.body().request_token;
+							SettingsStorage.token = response.body().request_token;
+							SettingsStorage.save(SignInActivity.this);
 							System.out.println();
-							ApiRetrofit.API.validate(new ValidateUser(email, password, token)).enqueue(new Callback<ValidateResponse>() {
+
+							ApiRetrofit.API.validate(new ValidateUser(email, password, SettingsStorage.token)).enqueue(new Callback<ValidateResponse>() {
 								@Override
 								public void onResponse(Call<ValidateResponse> call, Response<ValidateResponse> response) {
 									if (response.code() == 200 && response.body() != null && response.body().success) {
+										SettingsStorage.token = response.body().request_token;
+										SettingsStorage.save(SignInActivity.this);
 										startActivity(new Intent(SignInActivity.this, FilmsActivity.class));
 										finish();
 									}
