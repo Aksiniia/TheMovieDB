@@ -55,6 +55,15 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:onClick="info"
                     android:id="@+id/rec_new"

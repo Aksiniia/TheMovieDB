@@ -28,11 +28,11 @@ public class FilmsActivity extends AppCompatActivity {
 		RecyclerView r = findViewById(R.id.rec_new);
 		r.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
-		ApiRetrofit.API.getMovies(Storage.getInstance(this).getApiKey()).enqueue(new Callback<LatestModel>() {
+		ApiRetrofit.API.getMovies("4ec92a5ee97823eb5d0497fb05a5f5a1").enqueue(new Callback<LatestModel>() {
 			@Override
 			public void onResponse(Call<LatestModel> call, Response<LatestModel> response) {
 				if (response.code() == 200) {
-//					binding.name.setText(response.body().original_title);
+//				binding.title.setText(response.body().original_title);
 				}
 			}
 
@@ -42,7 +42,7 @@ public class FilmsActivity extends AppCompatActivity {
 			}
 		});
 
-		ApiRetrofit.API.getPopular(Storage.getInstance(this).getApiKey()).enqueue(new Callback<PopularModel>() {
+		ApiRetrofit.API.getPopular("4ec92a5ee97823eb5d0497fb05a5f5a1").enqueue(new Callback<PopularModel>() {
 			@Override
 			public void onResponse(Call<PopularModel> call, Response<PopularModel> response) {
 				if (response.code() == 200) {
